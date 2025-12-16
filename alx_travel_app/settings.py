@@ -27,10 +27,12 @@ INSTALLED_APPS = [
 
     'rest_framework',   # DRF
     'drf_yasg',         # Swagger
+    'corsheaders',      # CORS
     'listings',         # your app
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # must be at the top
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -95,13 +97,12 @@ STATIC_URL = 'static/'
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-INSTALLED_APPS += [
-    'corsheaders',
-]
-
-MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',  # must be at the top
-    *MIDDLEWARE,
-]
-
+# CORS settings
 CORS_ALLOW_ALL_ORIGINS = True  # for testing only
+
+# REST framework settings
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ]
+}
